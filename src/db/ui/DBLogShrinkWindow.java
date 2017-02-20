@@ -78,10 +78,7 @@ public class DBLogShrinkWindow extends JFrame {
 		shrinkButton.addActionListener(e -> {
 			
 			SwingUtilities.invokeLater(() -> { 
-				controller.shrink(() -> {
-					JOptionPane.showMessageDialog(this, "Shrinking Complete. Refreshing db table sizes");
-					controller.fetch(this::onDataFetchComplete);
-				});
+				controller.shrink(() -> onShrinkComplete());
 			});
 			savePreferences();
 		});
@@ -97,9 +94,9 @@ public class DBLogShrinkWindow extends JFrame {
 		showTxLogSize(); 
 	}
 	
-	public void onShrinkComplete(Object[][] data) {
-		initTable(data);
-		showTxLogSize(); 
+	public void onShrinkComplete() {
+		JOptionPane.showMessageDialog(this, "Shrinking Complete. Refreshing db table sizes");
+		controller.fetch(this::onDataFetchComplete);
 	}
 	
 	private void savePreferences() {
